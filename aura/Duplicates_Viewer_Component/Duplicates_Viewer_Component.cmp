@@ -1,0 +1,133 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,forceCommunity:availableForAllPageTypes,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" 
+                controller="Duplicate_Viewer_Controller"
+                access="global">
+        
+    <aura:attribute name="Dup_List" type="List" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="recordId" type="String"/>
+    
+    <!-- PAGE HEADER -->
+    <lightning:layout class="slds-page-header slds-page-header--object-home slds-grid slds-wrap" >
+        
+        <lightning:layoutItem >
+            <lightning:icon iconName="standard:report" alternativeText="Add To My Reserve List"/>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem padding="horizontal-small" class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Record Scanner</h1>
+                <h2 class="slds-text-heading--medium">Search for Duplicates</h2>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem flexibility="auto" class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+            <lightning:input label="Record Id"
+                                     name="record_id"
+                                     aura:id="record_id"    
+                                     value="{!v.recordId}"
+                                     onblur="{!c.getDuplicates}"/> 
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+     
+    <!-- FORM -->
+    <div class="submit-form">
+        
+        <lightning:card title="Duplicates Detected"  iconName="action:log_event">
+   
+            <p class="slds-p-horizontal_small">
+                
+                <lightning:layout class="slds-grid slds-wrap">
+                    
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                        	<aura:if isTrue="{!!v.isLoading}"> 
+                                Result: <b>{!v.Dup_List.length} duplicates found.</b>
+                            </aura:if>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem flexibility="auto" padding="around-small" class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+   
+                        <aura:if isTrue="{!v.isLoading}">           
+                            
+                            <div alternativeText="" class="slds-spinner slds-spinner_x-small slds-is-relative slds-spinner_brand">
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                            
+                            <aura:set attribute="else">
+                                
+                                <aura:if isTrue="{!!empty(v.Dup_List)}">
+                           
+                                    <table  class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_striped">
+                                        <thead >
+                                            <tr class="slds-text-title_caps">
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Duplicate">Duplicate
+                                                    </div>
+                                                </th>
+                                                
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Record Type">Record Type
+                                                    </div>
+                                                </th>
+                                                
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Match Type">Match Type
+                                                    </div>
+                                                </th>
+                                                
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Match Confidence">Match Confidence
+                                                    </div>
+                                                </th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <aura:iteration items="{!v.Dup_List}" var="dup">
+                                                
+                                                <tr class="slds-hint-parent">
+                                                    <td data-label="Duplicate">
+                                                        <div class="slds-truncate"><a id="{!dup.RecordId}" href="{!'/' + dup.RecordId}">{!dup.RecordName}</a></div>
+                                                    </td>
+                                                    
+                                                    <td data-label="Record Type">
+                                                        <div class="slds-truncate">{!dup.RecordType}</div>
+                                                    </td>
+                                                                                                        
+                                                    <td data-label="Match Type">
+                                                        <div class="slds-truncate">{!dup.MatchType}</div>
+                                                    </td>
+                                                    
+                                                    <td data-label="Match Confidence">
+                                                        <div class="slds-truncate"><b>{!dup.MatchConfidence}%</b></div>
+                                                    </td> 
+                                                    
+                                                </tr>
+                                                
+                                            </aura:iteration>  
+                                            
+                                        </tbody>
+                                    </table>
+                                    
+                                </aura:if>
+                                
+                            </aura:set>
+                            
+                            
+                        </aura:if> 
+                        
+                    </lightning:layoutItem>
+                    
+                </lightning:layout>
+                
+            </p>         
+        </lightning:card>
+        
+    </div>
+        
+    <!-- FORM -->
+   
+</aura:component>
