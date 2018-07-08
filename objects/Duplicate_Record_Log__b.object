@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+
+    <fields>
+        <fullName>Type__c</fullName>
+        <label>Type</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    
+    <fields>
+        <fullName>Record_Name__c</fullName>
+        <label>Record Name</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    
+    <fields>
+        <fullName>Created_Date__c</fullName>
+        <label>Created Date</label>
+        <required>true</required>
+        <type>DateTime</type>
+    </fields>
+    
+    <fields>
+        <fullName>Source__c</fullName>
+        <label>Source</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+
+    <fields>
+        <fullName>Original_Record_Id__c</fullName>
+        <label>Original Record Id</label>
+        <length>18</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+
+    <fields>
+        <fullName>Campaign__c</fullName>
+        <label>Campaign</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipName>Duplicate_Record_Log</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+
+    <fields>
+        <fullName>Duplicate_Details__c</fullName>
+        <label>Duplicate Details</label>
+        <length>32768</length>
+        <required>false</required>
+        <visibleLines>10</visibleLines>
+        <type>LongTextArea</type>
+    </fields>
+
+     <fields>
+        <fullName>Additional_Details__c</fullName>
+        <label>Additional Details</label>
+        <length>32768</length>
+        <required>false</required>
+        <visibleLines>10</visibleLines>
+        <type>LongTextArea</type>
+    </fields>
+
+    <indexes>
+        <fullName>DuplicateRecordLogIndex</fullName>
+        <label>DuplicateRecordLog Index</label>
+        <fields>
+            <name>Original_Record_Id__c</name>
+            <sortDirection>DESC</sortDirection>
+        </fields>
+        <fields>
+            <name>Created_Date__c</name>
+            <sortDirection>DESC</sortDirection>
+        </fields>              
+    </indexes>
+
+    <label>Duplicate Record Log</label>
+    <pluralLabel>Duplicate Record Logs</pluralLabel>
+</CustomObject>
